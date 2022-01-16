@@ -26,11 +26,9 @@ public:
 	static void InitJavaFunctions();
 #endif
 
-	/**
-	 * Displays a toast text on the screen
-	 */
+
 	UFUNCTION()
-		static void AndroidAPITemplate_GrabImage(const FString& Content, FOnImagePicked ImgPickedDlg);
+	static void AndroidAPITemplate_GrabImage(FOnImagePicked ImgPickedDlg);
 
 
 };

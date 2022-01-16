@@ -61,7 +61,7 @@
 		<insert>
      private static native void imagePicked(String code);
      
-      public void AndroidThunkJava_AndroidAPI_GrabImage(final String toast)
+      public void AndroidThunkJava_AndroidAPI_GrabImage()
       {
 				runOnUiThread(new Runnable()
         {

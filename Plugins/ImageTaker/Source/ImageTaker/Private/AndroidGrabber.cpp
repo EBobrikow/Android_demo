@@ -28,15 +28,13 @@ if (JNIEnv* Env = FAndroidApplication::GetJavaEnv(true)) { \
 #define DECLARE_JAVA_METHOD(name) \
 static jmethodID name = NULL;
 
-DECLARE_JAVA_METHOD(AndroidThunkJava_AndroidAPI_GrabImage);		// Here goes the name of the method in the Java side
+DECLARE_JAVA_METHOD(AndroidThunkJava_AndroidAPI_GrabImage);		
 
 
 void UAndroidGrabber::InitJavaFunctions()
 {
-	// Same here, but we add the Java signature (the type of the parameters is between the parameters, and the return type is added at the end,
-	// here the return type is V for "void")
-	// More details here about Java signatures: http://www.rgagnon.com/javadetails/java-0286.html
-	INIT_JAVA_METHOD(AndroidThunkJava_AndroidAPI_GrabImage, "(Ljava/lang/String;)V");
+	
+	INIT_JAVA_METHOD(AndroidThunkJava_AndroidAPI_GrabImage, "()V");
 	
 }
 #undef DECLARE_JAVA_METHOD
@@ -44,7 +42,7 @@ void UAndroidGrabber::InitJavaFunctions()
 
 #endif
 
-void UAndroidGrabber::AndroidAPITemplate_GrabImage(const FString& Content, FOnImagePicked ImgPickedDlg)
+void UAndroidGrabber::AndroidAPITemplate_GrabImage(FOnImagePicked ImgPickedDlg)
 {
 	ImgPickedCallback = ImgPickedDlg;
 	
@@ -53,11 +51,7 @@ void UAndroidGrabber::AndroidAPITemplate_GrabImage(const FString& Content, FOnIm
 	if (JNIEnv* Env = FAndroidApplication::GetJavaEnv(true))
 	{
 		InitJavaFunctions();
-		// First step, we convert the FString (UE4) parameter to a JNI parameter that will hold a String
-		jstring JavaString = Env->NewStringUTF(TCHAR_TO_UTF8(*Content));
-
-		// Then we call the method, we the Java String parameter
-		FJavaWrapper::CallVoidMethod(Env, FJavaWrapper::GameActivityThis, AndroidThunkJava_AndroidAPI_GrabImage, JavaString);
+		FJavaWrapper::CallVoidMethod(Env, FJavaWrapper::GameActivityThis, AndroidThunkJava_AndroidAPI_GrabImage);
 	}
 #endif
 }

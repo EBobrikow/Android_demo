@@ -23,14 +23,13 @@ void UBaseGlobalWidget::NativeConstruct()
 void UBaseGlobalWidget::OnOpenBtnClicked()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Open button clicked"));
-	FString Result = "";
 	FOnImagePicked locDlg;
 	locDlg.AddDynamic(this, &UBaseGlobalWidget::OnImagePickerFinished);
 	UAndroidGrabber* AndrGrab = NewObject<UAndroidGrabber>();
 
 	if (AndrGrab)
 	{
-		AndrGrab->AndroidAPITemplate_GrabImage(Result, locDlg);
+		AndrGrab->AndroidAPITemplate_GrabImage(locDlg);
 	}
 
 }
