@@ -8,7 +8,7 @@ public class Android_demo : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "ImageTaker" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "ImageTaker", "DesktopPlatform", "ImageWrapper" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 

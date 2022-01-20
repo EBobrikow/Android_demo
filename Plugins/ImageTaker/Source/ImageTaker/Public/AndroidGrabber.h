@@ -23,7 +23,7 @@ public:
 
 
 #if PLATFORM_ANDROID
-	static void InitJavaFunctions();
+	static bool InitJavaFunctions();
 #endif
 
 

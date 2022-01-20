@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "PlaneActor.h"
+#include "Actors/PlaneActor.h"
 #include "UObject/ConstructorHelpers.h"
 
 
@@ -20,27 +20,31 @@ void APlaneActor::ApplyImageOnPlane(UTexture2D* image)
 	double sizeX = image->GetSizeX();
 	double sizeY = image->GetSizeY();
 
+	
+
 	double scaleX = sizeX / sizeY;
 	double scaleY = sizeY / sizeX;
 
-	StaticMeshComp->SetRelativeScale3D(FVector(scaleX, scaleY, 0.01f));
 	
-
-	UMaterialInstanceDynamic* DynMaterial = UMaterialInstanceDynamic::Create(Material, this);
+	FVector CurScale = MeshScale;
+	if (sizeX > sizeY)
+		CurScale.X *= scaleX;
+	else
+		CurScale.Y *= scaleY;
 	
-
-	DynMaterial->SetTextureParameterValue(FName("T2DParam"), image);
-	DynMaterial->SetScalarParameterValue(FName("scaleX"), scaleX);
-	DynMaterial->SetScalarParameterValue(FName("scaleY"), scaleY);
-
 	
+	//CurScale.Y *= scaleY;
 
 	if (StaticMeshComp)
-	{
-		StaticMeshComp->SetMaterial(0, DynMaterial);
-		
-		
-	}
+		StaticMeshComp->SetRelativeScale3D(CurScale);
+
+	//DynMaterial = UMaterialInstanceDynamic::Create(Material, this);
+	
+	if (DynMaterial)
+		DynMaterial->SetTextureParameterValue(FName("T2DParam"), image);
+
+
+	
 
 }
 
@@ -48,6 +52,15 @@ void APlaneActor::ApplyImageOnPlane(UTexture2D* image)
 void APlaneActor::BeginPlay()
 {
 	Super::BeginPlay();
+
+	MeshScale = StaticMeshComp->GetRelativeScale3D();
+	DynMaterial = UMaterialInstanceDynamic::Create(Material, this);
+
+	if (StaticMeshComp)
+	{
+		StaticMeshComp->SetMaterial(0, DynMaterial);
+
+	}
 }
 
 // Called every frame

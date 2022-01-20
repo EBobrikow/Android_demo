@@ -17,28 +17,8 @@ static FOnImagePicked ImgPickedCallback;
 #include "Android/AndroidApplication.h"
 #include <jni.h>
 
-#define INIT_JAVA_METHOD(name, signature) \
-if (JNIEnv* Env = FAndroidApplication::GetJavaEnv(true)) { \
-	name = FJavaWrapper::FindMethod(Env, FJavaWrapper::GameActivityClassID, #name, signature, false); \
-	check(name != NULL); \
-} else { \
-	check(0); \
-}
+static jmethodID GrabImageMethod = NULL;
 
-#define DECLARE_JAVA_METHOD(name) \
-static jmethodID name = NULL;
-
-DECLARE_JAVA_METHOD(AndroidThunkJava_AndroidAPI_GrabImage);		
-
-
-void UAndroidGrabber::InitJavaFunctions()
-{
-	
-	INIT_JAVA_METHOD(AndroidThunkJava_AndroidAPI_GrabImage, "()V");
-	
-}
-#undef DECLARE_JAVA_METHOD
-#undef INIT_JAVA_METHOD
 
 #endif
 
@@ -50,8 +30,12 @@ void UAndroidGrabber::AndroidAPITemplate_GrabImage(FOnImagePicked ImgPickedDlg)
 #if PLATFORM_ANDROID
 	if (JNIEnv* Env = FAndroidApplication::GetJavaEnv(true))
 	{
-		InitJavaFunctions();
-		FJavaWrapper::CallVoidMethod(Env, FJavaWrapper::GameActivityThis, AndroidThunkJava_AndroidAPI_GrabImage);
+		GrabImageMethod = FJavaWrapper::FindMethod(Env, FJavaWrapper::GameActivityClassID, "GrabImage", "()V", false);
+		if (GrabImageMethod)
+		{
+			FJavaWrapper::CallVoidMethod(Env, FJavaWrapper::GameActivityThis, GrabImageMethod);
+		}
+		
 	}
 #endif
 }

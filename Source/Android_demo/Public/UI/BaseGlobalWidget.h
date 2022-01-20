@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/Button.h"
 #include "Components/Image.h"
+#include "Services/ImageTakerManager.h"
 #include "BaseGlobalWidget.generated.h"
 
 /**
@@ -26,11 +27,13 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void OnOpenBtnClicked();
 
-	UFUNCTION()
-	void OnImagePickerFinished(FString path);
+	//UFUNCTION()
+	//void OnImagePickerFinished(FString path);
 	
 private:
 
-	FString GetRootPath();
+    UPROPERTY()
+	UImageTakerManager* ImgTakerManager;
+
 
 };

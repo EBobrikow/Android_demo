@@ -36,6 +36,12 @@ public:
 
 private:
 
+	UPROPERTY()
+	FVector MeshScale;
+
+	UPROPERTY()
+	UMaterialInstanceDynamic* DynMaterial;
+
 	
 
 };
