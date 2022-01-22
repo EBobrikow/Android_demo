@@ -1,6 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "AndroidGrabber.h"
 #include "CoreMinimal.h"
 #include "UObject/WeakObjectPtr.h"
@@ -22,7 +19,7 @@ static jmethodID GrabImageMethod = NULL;
 
 #endif
 
-void UAndroidGrabber::AndroidAPITemplate_GrabImage(FOnImagePicked ImgPickedDlg)
+void UAndroidGrabber::GrabImage(FOnImagePicked ImgPickedDlg)
 {
 	ImgPickedCallback = ImgPickedDlg;
 	
@@ -52,7 +49,7 @@ extern "C"
 		ImagePath = FString(UTF8_TO_TCHAR(charsId));
 		jni->ReleaseStringUTFChars(code, charsId);
 		
-		UE_LOG(LogTemp, Log, TEXT("Java callback, path: %s"), *ImagePath);
+		UE_LOG(LogTemp, Log, TEXT("imagePicked callback, path: %s"), *ImagePath);
 
 		if (ImgPickedCallback.IsBound())
 		{

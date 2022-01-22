@@ -9,7 +9,7 @@
 /**
  * 
  */
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnImagePicked, FString, ImagePath);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnImagePicked, const FString& , ImagePath);
 
 UCLASS()
 class IMAGETAKER_API UAndroidGrabber : public UObject
@@ -21,14 +21,8 @@ public:
 	
 	FOnImagePicked OnImagePickedDelegate;
 
-
-#if PLATFORM_ANDROID
-	static bool InitJavaFunctions();
-#endif
-
-
 	UFUNCTION()
-	static void AndroidAPITemplate_GrabImage(FOnImagePicked ImgPickedDlg);
+	static void GrabImage(FOnImagePicked ImgPickedDlg);
 
 
 };

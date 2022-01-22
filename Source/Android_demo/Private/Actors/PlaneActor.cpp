@@ -9,7 +9,7 @@
 APlaneActor::APlaneActor()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	StaticMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MeshComp"));
 	StaticMeshComp->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
@@ -32,23 +32,18 @@ void APlaneActor::ApplyImageOnPlane(UTexture2D* image)
 	else
 		CurScale.Y *= scaleY;
 	
-	
-	//CurScale.Y *= scaleY;
+
 
 	if (StaticMeshComp)
 		StaticMeshComp->SetRelativeScale3D(CurScale);
 
-	//DynMaterial = UMaterialInstanceDynamic::Create(Material, this);
 	
 	if (DynMaterial)
 		DynMaterial->SetTextureParameterValue(FName("T2DParam"), image);
 
-
-	
-
 }
 
-// Called when the game starts or when spawned
+
 void APlaneActor::BeginPlay()
 {
 	Super::BeginPlay();
@@ -63,7 +58,7 @@ void APlaneActor::BeginPlay()
 	}
 }
 
-// Called every frame
+
 void APlaneActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);

@@ -27,8 +27,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void OnOpenBtnClicked();
 
-	//UFUNCTION()
-	//void OnImagePickerFinished(FString path);
 	
 private:
 
